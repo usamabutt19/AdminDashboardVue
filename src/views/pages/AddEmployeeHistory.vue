@@ -5,13 +5,15 @@ export default {
 
     data() {
         return {
-            title: 'Employee History',
-            searchEmployeeId: '',
-            start_date: "",
-            end_date: "",
-            addDepartment: "",
-            addLocation: "",
-            jobPosition: "",
+            dataFields: {
+                title: 'Employee History',
+                start_date: "",
+                end_date: "",
+                addDepartment: "",
+                addLocation: "",
+                jobPosition: "",
+            },
+            searchEmployeeEmail: "",
             foundEmployee: null,
             searched: false,
             showhistory: false
@@ -63,13 +65,7 @@ export default {
         },
         addhistory() {
             this.showhistory = true;
-            console.log({
-                start_date: this.start_date,
-                end_date: this.end_date,
-                addDepartment: this.addDepartment,
-                addLocation: this.addLocation,
-                jobPosition: this.jobPosition,
-            });
+            console.log("dataFields in Add History: ", this.dataFields);
         },
         searchEmployeeByDepartment() {
             // this.searchResults = this.employees.filter((employee) =>
@@ -88,7 +84,7 @@ export default {
         <div v-if="!foundEmployee">
             <form @submit.prevent="searchEmployee">
                 <label for="employee_id">Search Employee by Email:</label>
-                <input type="text" id="employee_id" v-model="searchEmployeeId" required>
+                <input type="text" id="employee_id" v-model="searchEmployeeEmail" required>
                 <button v-on:click="dummyTrue" class="mt-4 p-2 w-36 flex justify-center gap-2 rounded-md transition-colors text-white bg-purple-500 shadow-lg hover:bg-purple-600" type="submit">
                     Search Employee
                 </button>
@@ -98,7 +94,7 @@ export default {
         <div v-if="foundEmployee && !showhistory">
             <div class="flex gap-16">
                 <div class="flex-1 flex flex-col">
-                    <label for="employee_id">Employee ID:</label>
+                    <label for="employee_id">Employee Email:</label>
                     <p>{{ foundEmployee.email }}</p>
                     <label for="first_name">First Name:</label>
                     <p>{{ foundEmployee.first_name }}</p>
@@ -140,9 +136,9 @@ export default {
                 <div class=" flex gap-16">
                     <div class=" flex-1 flex flex-col">
                         <label for="start_date">Start Date:</label>
-                        <input type="date" id="start_date" v-model="start_date" required>
+                        <input type="date" id="start_date" v-model="dataFields.start_date" required>
                         <label for="department">Add Department:</label>
-                        <select id="department" v-model="addDepartment" @change="searchEmployeeByDepartment" required>
+                        <select id="department" v-model="dataFields.addDepartment" @change="searchEmployeeByDepartment" required>
                             <option value="">Select Department</option>
                             <option value="HR">HR</option>
                             <option value="Sales">Sales</option>
@@ -151,7 +147,7 @@ export default {
                             <option value="Technicle">Technicle</option>
                         </select>
                         <label for="location">Office Location</label>
-                        <select id="location" v-model="addLocation" @change="searchEmployeeByDepartment" required>
+                        <select id="location" v-model="dataFields.addLocation" @change="searchEmployeeByDepartment" required>
                             <option value="">Select Loaction</option>
                             <option value="Islamabad, Pakistan">Islamabad, Pakistan</option>
                             <option value="Beijing, China">Beijing, China</option>
@@ -168,9 +164,9 @@ export default {
                     </div>
                     <div class=" flex-1 flex flex-col">
                         <label for="end_date">End Date:</label>
-                        <input type="date" id="end_date" v-model="end_date" required>
+                        <input type="date" id="end_date" v-model="dataFields.end_date" required>
                         <label for="position">Job Position</label>
-                        <select id="position" v-model="jobPosition" @change="searchEmployeeByDepartment" required>
+                        <select id="position" v-model="dataFields.jobPosition" @change="searchEmployeeByDepartment" required>
                             <option value="">Select Job Position</option>
                             <option value="Electrical Engineer">Electrical Engineer</option>
                             <option value="Software Engineer">Software Engineer</option>

@@ -1,63 +1,3 @@
-<template>
-<PageWrapper :title="title">
-    <!--  -->
-    <div class="parent">
-        <h2 class="font-extrabold text-xl">{{ title }}</h2>
-        <!-- If employee is not found, show the search form -->
-        <div v-if="!foundEmployee">
-            <form @submit.prevent="searchEmployee">
-                <label for="employee_id">Search Employee by ID:</label>
-                <input type="text" id="employee_id" v-model="searchEmployeeId" required>
-                <button v-on:click="dummyTrue" class="mt-4 p-2 w-36 flex justify-center gap-2 rounded-md transition-colors text-white bg-purple-500 shadow-lg hover:bg-purple-600" type="submit">
-                    Search Employee
-                </button>
-            </form>
-            <div v-if="searched && !foundEmployee">
-                <p class="text-red-500">Employee not found.</p>
-            </div>
-        </div>
-        <!-- If employee is found, show the employee details form -->
-        <div v-else>
-            <form @submit.prevent="updateEmployee">
-                <label for="employee_id">Employee ID:</label>
-                <input type="text" id="employee_id" v-model="foundEmployee.employee_id" disabled>
-
-                <div class="flex gap-16">
-                    <div class="flex-1 flex flex-col">
-                        <label for="first_name">First Name:</label>
-                        <input type="text" id="first_name" v-model="foundEmployee.first_name" required>
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" v-model="foundEmployee.email" required>
-                        <label for="hire_date">Hire Date:</label>
-                        <input type="date" id="hire_date" v-model="foundEmployee.hire_date" required>
-                    </div>
-                    <div class="flex-1 flex flex-col">
-                        <label for="last_name">Last Name:</label>
-                        <input type="text" id="last_name" v-model="foundEmployee.last_name" required>
-                        <label for="phone_number">Phone Number:</label>
-                        <input type="tel" id="phone_number" v-model="foundEmployee.phone_number" required>
-                        <label for="salary">Salary:</label>
-                        <input type="number" id="salary" v-model="foundEmployee.salary" inputmode="numeric" required>
-                    </div>
-                </div>
-<div class="flex gap-4">
-                <button class="mt-4 p-2 w-36 flex justify-center gap-2 rounded-md transition-colors text-white bg-purple-500 shadow-lg hover:bg-purple-600" type="submit">
-                    Update Employee
-                </button>
-                <button
-                v-on:click="dummyNull"
-                class="mt-4 p-2 w-36 flex justify-center gap-2 rounded-md transition-colors text-white bg-purple-500 shadow-lg hover:bg-purple-600" type="submit">
-                    Update Another Employee
-                </button>
-            </div>
-
-            </form>
-        </div>
-    </div>
-</PageWrapper>
-</template>
-
-  
 <script>
 import PageWrapper from '@/components/PageWrapper.vue';
 
@@ -65,8 +5,19 @@ export default {
 
     data() {
         return {
-            title: 'Update Employee',
-            searchEmployeeId: '',
+            dataFields: {
+                title: 'Update Employee',
+                first_name: "",
+                last_name: "",
+                email: "",
+                phone_number: "",
+                hire_date: "",
+                salary: null,
+                addDepartment: "",
+                addLocation: "",
+                jobPosition: ""
+            },
+            searchEmployeeEmail: '',
             foundEmployee: null,
             searched: false,
         };
@@ -76,10 +27,10 @@ export default {
             this.foundEmployee = true
         },
         dummyNull() {
-            this.foundEmployee = null   
+            this.foundEmployee = null
         },
         searchEmployee() {
-            // Here you can implement the logic to search for the employee based on the provided `searchEmployeeId`
+            // Here you can implement the logic to search for the employee based on the provided `searchEmployeeEmail`
             // For simplicity, let's assume you already have the employee data fetched and stored in a variable named `employeeData`
             const employeeData = {
                 employee_id: 'EMP001',
@@ -92,7 +43,7 @@ export default {
             };
 
             // Simulate the search result
-            if (employeeData.employee_id === this.searchEmployeeId) {
+            if (employeeData.employee_id === this.searchEmployeeEmail) {
                 this.foundEmployee = {
                     ...employeeData
                 };
@@ -105,7 +56,7 @@ export default {
         updateEmployee() {
             // Here you can implement the logic to submit the form and update the employee
             // For simplicity, we will just log the updated employee data
-            console.log(this.foundEmployee);
+            console.log(this.dataFields);
 
             // You can send the data to your server or perform other actions here
             // For example, you might make an API call to update the employee in your database
@@ -114,7 +65,101 @@ export default {
 };
 </script>
 
-  
+<template>
+<PageWrapper :title="title">
+    <!--  -->
+    <div class="parent">
+        <h2 class="font-extrabold text-xl">{{ dataFields.title }}</h2>
+        <!-- If employee is not found, show the search form -->
+        <div v-if="!foundEmployee">
+            <form @submit.prevent="searchEmployee">
+                <label for="employee_email">Search Employee by Email:</label>
+                <input type="email" id="employee_email" v-model="searchEmployeeEmail" required>
+                <button v-on:click="dummyTrue" class="mt-4 p-2 w-36 flex justify-center gap-2 rounded-md transition-colors text-white bg-purple-500 shadow-lg hover:bg-purple-600" type="submit">
+                    Search Employee
+                </button>
+            </form>
+            <div v-if="searched && !foundEmployee">
+                <p class="text-red-500">Employee not found.</p>
+            </div>
+        </div>
+        <!-- If employee is found, show the employee details form -->
+        <div v-else>
+            <form @submit.prevent="updateEmployee">
+                <div class=" flex gap-16">
+                    <div class=" flex-1 flex flex-col">
+                        <label for="first_name">First Name:</label>
+                        <input type="text" id="first_name" v-model="dataFields.first_name">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" v-model="dataFields.email">
+                        <label for="hire_date">Hire Date:</label>
+                        <input type="date" id="hire_date" v-model="dataFields.hire_date">
+                        <label for="department">Add Department:</label>
+                        <select id="department" v-model="dataFields.addDepartment" @change="searchEmployeeByDepartment">
+                            <option value="">Select Department</option>
+                            <option value="HR">HR</option>
+                            <option value="Sales">Sales</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Exectives">Exectives</option>
+                            <option value="Technicle">Technicle</option>
+                        </select>
+                        <label for="location">Office Location</label>
+                        <select id="location" v-model="dataFields.addLocation" @change="searchEmployeeByDepartment">
+                            <option value="">Select Loaction</option>
+                            <option value="Islamabad, Pakistan">Islamabad, Pakistan</option>
+                            <option value="Beijing, China">Beijing, China</option>
+                            <option value="Kuala Lumpur, Malaysia">Kuala Lumpur, Malaysia</option>
+                            <option value="Tokyo, Japan">Tokyo, Japan</option>
+                            <option value="Okazaki, Japan">Okazaki, Japan</option>
+                            <option value="Berlin, Germany">Berlin, Germany</option>
+                            <option value="London, United Kindom">London, United Kindom</option>
+                            <option value="DC, United States of America">DC, United States of America</option>
+                            <option value="Ottawa, Canada">Ottawa, Canada</option>
+                            <option value="Brasilia, Brazil">Brasilia, Brazil</option>
+                            <option value="Cape Town, South Africa">Cape Town, South Africa</option>
+                        </select>
+                    </div>
+                    <div class=" flex-1 flex flex-col">
+                        <label for="last_name">Last Name:</label>
+                        <input type="text" id="last_name" v-model="dataFields.last_name">
+                        <label for="phone_number">Phone Number:</label>
+                        <input type="tel" id="phone_number" v-model="dataFields.phone_number">
+                        <label for="salary">Salary:</label>
+                        <input type="number" id="salary" v-model="dataFields.salary" inputmode="numeric">
+                        <label for="position">Job Position</label>
+                        <select id="position" v-model="dataFields.jobPosition" @change="searchEmployeeByDepartment">
+                            <option value="">Select Job Position</option>
+                            <option value="Electrical Engineer">Electrical Engineer</option>
+                            <option value="Software Engineer">Software Engineer</option>
+                            <option value="Lead Engineer">Lead Engineer</option>
+                            <option value="HR Associate">HR Associate</option>
+                            <option value="HR Manager">HR Manager</option>
+                            <option value="Accountant">Accountant</option>
+                            <option value="Finance Manager">Finance Manager</option>
+                            <option value="Assistant Director">Assistant Director</option>
+                            <option value="Director">Director</option>
+                            <option value="Sales Man">Sales Man</option>
+                            <option value="Sales Manager">Sales Mananger</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="flex gap-4">
+                    <button class="mt-4 p-2 w-36 flex justify-center gap-2 rounded-md transition-colors text-white bg-purple-500 shadow-lg hover:bg-purple-600" type="submit">
+                        Update Employee
+                    </button>
+                    <button v-on:click="dummyNull" class="mt-4 p-2 w-36 flex justify-center gap-2 rounded-md transition-colors text-white bg-purple-500 shadow-lg hover:bg-purple-600" type="submit">
+                        Update Another Employee
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</PageWrapper>
+</template>
+
+
 <style scoped>
 /* Styling for the form wrapper */
 .parent {

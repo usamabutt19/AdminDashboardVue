@@ -33,11 +33,6 @@ export default {
         };
     },
     methods: {
-        searchEmployeeById() {
-            this.searchResults = this.employees.filter((employee) =>
-                employee.id.toString().includes(this.searchEmployeeId)
-            );
-        },
         searchEmployeeByFirstName() {
             this.searchResults = this.employees.filter((employee) =>
                 employee.first_name.toLowerCase().includes(this.searchFirstName.toLowerCase())
@@ -60,21 +55,15 @@ export default {
 <PageWrapper title="Search Employees">
     <div class="search-form">
         <h2 class="font-extrabold text-xl">{{title}}</h2>
-        <div class="search-field">
-            <label for="employee_id">Search by Employee ID:</label>
-            <input type="text" id="employee_id" v-model="searchEmployeeId" @input="searchEmployeeById">
-            <button class="ml-8 p-2 w-36 gap-2 rounded-md transition-colors text-white bg-purple-500 shadow-lg hover:bg-purple-600" type="submit">Search</button>
-        </div>
-
-        <div class="search-field">
-            <label for="first_name">Search by First Name:</label>
-            <input type="text" id="first_name" v-model="searchFirstName" @input="searchEmployeeByFirstName">
-            <button class="ml-8 p-2 w-36 gap-2 rounded-md transition-colors text-white bg-purple-500 shadow-lg hover:bg-purple-600" type="submit">Search</button>
-        </div>
 
         <div class="search-field">
             <label for="email">Search by Email:</label>
             <input type="email" id="email" v-model="searchEmail" @input="searchEmployeeByEmail">
+            <button class="ml-8 p-2 w-36 gap-2 rounded-md transition-colors text-white bg-purple-500 shadow-lg hover:bg-purple-600" type="submit">Search</button>
+        </div>
+        <div class="search-field">
+            <label for="first_name">Search by First Name:</label>
+            <input type="text" id="first_name" v-model="searchFirstName" @input="searchEmployeeByFirstName">
             <button class="ml-8 p-2 w-36 gap-2 rounded-md transition-colors text-white bg-purple-500 shadow-lg hover:bg-purple-600" type="submit">Search</button>
         </div>
 
@@ -83,10 +72,10 @@ export default {
             <select id="department" v-model="searchDepartment" @change="searchEmployeeByDepartment" required>
                 <option value="">Select Department</option>
                 <option value="HR">HR</option>
-                        <option value="Finance">Sales</option>
-                        <option value="Management">Finance</option>
-                        <option value="Management">Exectives</option>
-                        <option value="Management">Technicle</option>
+                <option value="Finance">Sales</option>
+                <option value="Management">Finance</option>
+                <option value="Management">Exectives</option>
+                <option value="Management">Technicle</option>
                 <!-- Add your department options here -->
             </select>
             <button class="ml-8 p-2 w-36 gap-2 rounded-md transition-colors text-white bg-purple-500 shadow-lg hover:bg-purple-600" type="submit">Search</button>

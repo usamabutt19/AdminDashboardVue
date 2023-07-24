@@ -4,34 +4,28 @@ import PageWrapper from '@/components/PageWrapper.vue'
 export default {
     data() {
         return {
-            title: "Add Employee",
-            first_name: "",
-            last_name: "",
-            email: "",
-            phone_number: "",
-            hire_date: "",
-            salary: null,
-            addDepartment: "",
-            addLocation: "",
-            jobPosition: ""
+            dataFields: {
+                title: "Add Employee",
+                first_name: "",
+                last_name: "",
+                email: "",
+                phone_number: "",
+                hire_date: "",
+                salary: null,
+                addDepartment: "",
+                addLocation: "",
+                jobPosition: ""
+            }
         };
     },
     methods: {
         addEmployee() {
             // Here you can implement the logic to submit the form and add the employee
             // For simplicity, we will just log the employee data
-            console.log({
+            console.log(
                 // employee_id: this.employee_id,
-                first_name: this.first_name,
-                last_name: this.last_name,
-                email: this.email,
-                phone_number: this.phone_number,
-                hire_date: this.hire_date,
-                salary: this.salary,
-                addDepartment: this.addDepartment,
-                addLocation: this.addLocation,
-                jobPosition: this.jobPosition,
-            });
+                "dataFields of Add Employee: ", this.dataFields
+            );
 
             // You can send the data to your server or perform other actions here
             // For example, you might make an API call to add the employee to your database
@@ -49,19 +43,19 @@ export default {
 <PageWrapper title="AddEmployee">
     <!--  -->
     <div class="parent">
-        <h2 class="font-extrabold text-xl">{{ title }}</h2>
+        <h2 class="font-extrabold text-xl">{{ dataFields.title }}</h2>
         <form @submit.prevent="addEmployee">
 
             <div class=" flex gap-16">
                 <div class=" flex-1 flex flex-col">
                     <label for="first_name">First Name:</label>
-                    <input type="text" id="first_name" v-model="first_name" required>
+                    <input type="text" id="first_name" v-model="dataFields.first_name" required>
                     <label for="email">Email:</label>
-                    <input type="email" id="email" v-model="email" required>
+                    <input type="email" id="email" v-model="dataFields.email" required>
                     <label for="hire_date">Hire Date:</label>
-                    <input type="date" id="hire_date" v-model="hire_date" required>
+                    <input type="date" id="hire_date" v-model="dataFields.hire_date" required>
                     <label for="department">Add Department:</label>
-                    <select id="department" v-model="addDepartment" @change="searchEmployeeByDepartment" required>
+                    <select id="department" v-model="dataFields.addDepartment" @change="searchEmployeeByDepartment" required>
                         <option value="">Select Department</option>
                         <option value="HR">HR</option>
                         <option value="Sales">Sales</option>
@@ -70,7 +64,7 @@ export default {
                         <option value="Technicle">Technicle</option>
                     </select>
                     <label for="location">Office Location</label>
-                    <select id="location" v-model="addLocation" @change="searchEmployeeByDepartment" required>
+                    <select id="location" v-model="dataFields.addLocation" @change="searchEmployeeByDepartment" required>
                         <option value="">Select Loaction</option>
                         <option value="Islamabad, Pakistan">Islamabad, Pakistan</option>
                         <option value="Beijing, China">Beijing, China</option>
@@ -87,13 +81,13 @@ export default {
                 </div>
                 <div class=" flex-1 flex flex-col">
                     <label for="last_name">Last Name:</label>
-                    <input type="text" id="last_name" v-model="last_name" required>
+                    <input type="text" id="last_name" v-model="dataFields.last_name" required>
                     <label for="phone_number">Phone Number:</label>
-                    <input type="tel" id="phone_number" v-model="phone_number" required>
+                    <input type="tel" id="phone_number" v-model="dataFields.phone_number" required>
                     <label for="salary">Salary:</label>
-                    <input type="number" id="salary" v-model="salary" inputmode="numeric" required>
+                    <input type="number" id="salary" v-model="dataFields.salary" inputmode="numeric" required>
                     <label for="position">Job Position</label>
-                    <select id="position" v-model="jobPosition" @change="searchEmployeeByDepartment" required>
+                    <select id="position" v-model="dataFields.jobPosition" @change="searchEmployeeByDepartment" required>
                         <option value="">Select Job Position</option>
                         <option value="Electrical Engineer">Electrical Engineer</option>
                         <option value="Software Engineer">Software Engineer</option>

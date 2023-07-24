@@ -6,7 +6,7 @@ export default {
     data() {
         return {
             title: 'Delete Employee',
-            searchEmployeeId: '',
+            searchEmployeeEmail: '',
             foundEmployee: null,
             searched: false,
         };
@@ -19,7 +19,7 @@ export default {
             this.foundEmployee = null
         },
         searchEmployee() {
-            // Here you can implement the logic to search for the employee based on the provided `searchEmployeeId`
+            // Here you can implement the logic to search for the employee based on the provided `searchEmployeeEmail`
             // For simplicity, let's assume you already have the employee data fetched and stored in a variable named `employeeData`
             const employeeData = {
                 employee_id: 'EMP001',
@@ -32,7 +32,7 @@ export default {
             };
 
             // Simulate the search result
-            if (employeeData.employee_id === this.searchEmployeeId) {
+            if (employeeData.employee_id === this.searchEmployeeEmail) {
                 this.foundEmployee = {
                     ...employeeData
                 };
@@ -52,7 +52,7 @@ export default {
         goBack() {
             // Clear the foundEmployee data and reset the search form
             this.foundEmployee = null;
-            this.searchEmployeeId = '';
+            this.searchEmployeeEmail = '';
             this.searched = false;
         },
     },
@@ -66,8 +66,8 @@ export default {
         <!-- If employee is not found and search not performed, show the search form -->
         <div v-if="!foundEmployee">
             <form @submit.prevent="searchEmployee">
-                <label for="employee_id">Search Employee by ID:</label>
-                <input type="text" id="employee_id" v-model="searchEmployeeId" required>
+                <label for="employee_id">Search Employee by Email:</label>
+                <input type="email" id="employee_id" v-model="searchEmployeeEmail" required>
                 <button v-on:click="dummyTrue" class="mt-4 p-2 w-36 flex justify-center gap-2 rounded-md transition-colors text-white bg-purple-500 shadow-lg hover:bg-purple-600" type="submit">
                     Search Employee
                 </button>
@@ -77,22 +77,22 @@ export default {
         <div v-if="foundEmployee">
             <div class="flex gap-16">
                 <div class="flex-1 flex flex-col">
-                    <label for="employee_id">Employee ID:</label>
-                    <p>{{ foundEmployee.employee_id }}</p>
+                    <label for="employee_id">Employee Email:</label>
+                    <p>{{ foundEmployee.email }}</p>
                     <label for="first_name">First Name:</label>
                     <p>{{ foundEmployee.first_name }}</p>
-                    <label for="email">Email:</label>
-                    <p>{{ foundEmployee.email }}</p>
-                    <label for="hire_date">Hire Date:</label>
-                    <p>{{ foundEmployee.hire_date }}</p>
+                    <label for="hire_date">Department: </label>
+                    <p>{{ foundEmployee.department }}</p>
+                    <label for="hire_date">Job Position: </label>
+                    <p>{{ foundEmployee.job_position }}</p>
                 </div>
                 <div class="flex-1 flex flex-col">
                     <label for="last_name">Last Name:</label>
                     <p>{{ foundEmployee.last_name }}</p>
                     <label for="phone_number">Phone Number:</label>
                     <p>{{ foundEmployee.phone_number }}</p>
-                    <label for="salary">Salary:</label>
-                    <p>{{ foundEmployee.salary }}</p>
+                    <label for="hire_date">Job Location: </label>
+                    <p>{{ foundEmployee.job_location }}</p>
                 </div>
             </div>
 
@@ -142,17 +142,20 @@ label {
     margin-top: 1rem;
 }
 
+input[type='email']
+ {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
 /* Styling for the read-only employee details */
 p {
     background-color: #f1f1f1;
     padding: 8px;
     border-radius: 5px;
     margin-bottom: 5px;
-}
-
-.flex {
-    display: flex;
-    align-items: center;
 }
 
 .gap-16 {
