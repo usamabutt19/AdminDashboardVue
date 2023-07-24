@@ -80,8 +80,13 @@ export default {
 
         <div class="search-field">
             <label for="department">Search by Department:</label>
-            <select id="department" v-model="searchDepartment" @change="searchEmployeeByDepartment">
+            <select id="department" v-model="searchDepartment" @change="searchEmployeeByDepartment" required>
                 <option value="">Select Department</option>
+                <option value="HR">HR</option>
+                        <option value="Finance">Sales</option>
+                        <option value="Management">Finance</option>
+                        <option value="Management">Exectives</option>
+                        <option value="Management">Technicle</option>
                 <!-- Add your department options here -->
             </select>
             <button class="ml-8 p-2 w-36 gap-2 rounded-md transition-colors text-white bg-purple-500 shadow-lg hover:bg-purple-600" type="submit">Search</button>
@@ -101,7 +106,6 @@ export default {
 </PageWrapper>
 </template>
 
-  
 <style scoped>
 /* Styling for the search form wrapper */
 .search-form {
@@ -134,10 +138,6 @@ select {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-select {
-    /* Adjust the height of the select element if needed */
     height: 40px;
 }
 

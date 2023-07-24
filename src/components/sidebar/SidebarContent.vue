@@ -38,6 +38,11 @@ const isCurrentPath = (path) => {
                 :active="isCurrentRoute('AddEmployee')"
             />
             <SidebarCollapsibleItem
+                :to="{ name: 'AddEmployeeHistory' }"
+                title="Add Employee History"
+                :active="isCurrentRoute('AddEmployeeHistory')"
+            />
+            <SidebarCollapsibleItem
                 :to="{ name: 'SearchEmployee' }"
                 title="Search Employee"
                 :active="isCurrentRoute('SearchEmployee')"

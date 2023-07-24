@@ -5,13 +5,15 @@ export default {
     data() {
         return {
             title: "Add Employee",
-            employee_id: "",
             first_name: "",
             last_name: "",
             email: "",
             phone_number: "",
             hire_date: "",
             salary: null,
+            addDepartment: "",
+            addLocation: "",
+            jobPosition: ""
         };
     },
     methods: {
@@ -19,17 +21,25 @@ export default {
             // Here you can implement the logic to submit the form and add the employee
             // For simplicity, we will just log the employee data
             console.log({
-                employee_id: this.employee_id,
+                // employee_id: this.employee_id,
                 first_name: this.first_name,
                 last_name: this.last_name,
                 email: this.email,
                 phone_number: this.phone_number,
                 hire_date: this.hire_date,
                 salary: this.salary,
+                addDepartment: this.addDepartment,
+                addLocation: this.addLocation,
+                jobPosition: this.jobPosition,
             });
 
             // You can send the data to your server or perform other actions here
             // For example, you might make an API call to add the employee to your database
+        },
+        searchEmployeeByDepartment() {
+            // this.searchResults = this.employees.filter((employee) =>
+            //     employee.department.toLowerCase().includes(this.searchDepartment.toLowerCase())
+            // );
         },
     },
 };
@@ -41,8 +51,6 @@ export default {
     <div class="parent">
         <h2 class="font-extrabold text-xl">{{ title }}</h2>
         <form @submit.prevent="addEmployee">
-            <label for="employee_id">Employee ID:</label>
-            <input type="text" id="employee_id" v-model="employee_id" required>
 
             <div class=" flex gap-16">
                 <div class=" flex-1 flex flex-col">
@@ -52,6 +60,30 @@ export default {
                     <input type="email" id="email" v-model="email" required>
                     <label for="hire_date">Hire Date:</label>
                     <input type="date" id="hire_date" v-model="hire_date" required>
+                    <label for="department">Add Department:</label>
+                    <select id="department" v-model="addDepartment" @change="searchEmployeeByDepartment" required>
+                        <option value="">Select Department</option>
+                        <option value="HR">HR</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Exectives">Exectives</option>
+                        <option value="Technicle">Technicle</option>
+                    </select>
+                    <label for="location">Office Location</label>
+                    <select id="location" v-model="addLocation" @change="searchEmployeeByDepartment" required>
+                        <option value="">Select Loaction</option>
+                        <option value="Islamabad, Pakistan">Islamabad, Pakistan</option>
+                        <option value="Beijing, China">Beijing, China</option>
+                        <option value="Kuala Lumpur, Malaysia">Kuala Lumpur, Malaysia</option>
+                        <option value="Tokyo, Japan">Tokyo, Japan</option>
+                        <option value="Okazaki, Japan">Okazaki, Japan</option>
+                        <option value="Berlin, Germany">Berlin, Germany</option>
+                        <option value="London, United Kindom">London, United Kindom</option>
+                        <option value="DC, United States of America">DC, United States of America</option>
+                        <option value="Ottawa, Canada">Ottawa, Canada</option>
+                        <option value="Brasilia, Brazil">Brasilia, Brazil</option>
+                        <option value="Cape Town, South Africa">Cape Town, South Africa</option>
+                    </select>
                 </div>
                 <div class=" flex-1 flex flex-col">
                     <label for="last_name">Last Name:</label>
@@ -60,6 +92,21 @@ export default {
                     <input type="tel" id="phone_number" v-model="phone_number" required>
                     <label for="salary">Salary:</label>
                     <input type="number" id="salary" v-model="salary" inputmode="numeric" required>
+                    <label for="position">Job Position</label>
+                    <select id="position" v-model="jobPosition" @change="searchEmployeeByDepartment" required>
+                        <option value="">Select Job Position</option>
+                        <option value="Electrical Engineer">Electrical Engineer</option>
+                        <option value="Software Engineer">Software Engineer</option>
+                        <option value="Lead Engineer">Lead Engineer</option>
+                        <option value="HR Associate">HR Associate</option>
+                        <option value="HR Manager">HR Manager</option>
+                        <option value="Accountant">Accountant</option>
+                        <option value="Finance Manager">Finance Manager</option>
+                        <option value="Assistant Director">Assistant Director</option>
+                        <option value="Director">Director</option>
+                        <option value="Sales Man">Sales Man</option>
+                        <option value="Sales Manager">Sales Mananger</option>
+                    </select>
                 </div>
 
             </div>

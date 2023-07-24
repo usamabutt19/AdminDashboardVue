@@ -23,7 +23,6 @@ import { Icon } from '@iconify/vue'
                 target="_blank"
                 class="text-blue-600 hover:underline"
             >
-                Ahmed Kamel
             </a>
         </p>
     </footer>
