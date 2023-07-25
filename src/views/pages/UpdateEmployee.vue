@@ -99,8 +99,8 @@ export default {
                             <option value="">Select Department</option>
                             <option value="HR">HR</option>
                             <option value="Sales">Sales</option>
-                            <option value="Finance">Finance</option>
-                            <option value="Exectives">Exectives</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Exectives">Executives</option>
                             <option value="Technicle">Technicle</option>
                         </select>
                         <label for="location">Office Location</label>
@@ -135,10 +135,10 @@ export default {
                             <option value="HR Associate">HR Associate</option>
                             <option value="HR Manager">HR Manager</option>
                             <option value="Accountant">Accountant</option>
-                            <option value="Finance Manager">Finance Manager</option>
+                            <option value="Marketing Manager">Marketing Manager</option>
                             <option value="Assistant Director">Assistant Director</option>
                             <option value="Director">Director</option>
-                            <option value="Sales Man">Sales Man</option>
+                            <option value="SalesMan">SalesMan</option>
                             <option value="Sales Manager">Sales Mananger</option>
                         </select>
                     </div>

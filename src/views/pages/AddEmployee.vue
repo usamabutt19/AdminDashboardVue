@@ -20,7 +20,74 @@ export default {
                 department: "",
                 location: "",
                 jobPosition: ""
-            }
+            },
+            // jobPositions: [{
+            //         department: 'HR',
+            //         position: 'HR Associate'
+            //     },
+            //     {
+            //         department: 'HR',
+            //         position: 'HR Manager'
+            //     },
+            //     {
+            //         department: 'Sales',
+            //         position: 'SalesMan'
+            //     },
+            //     {
+            //         department: 'Sales',
+            //         position: 'Sales Manager'
+            //     },
+            //     {
+            //         department: 'Marketing',
+            //         position: 'Marketing Associate'
+            //     },
+            //     {
+            //         department: 'Marketing',
+            //         position: 'Marketing Manager'
+            //     },
+            //     {
+            //         department: 'Executives',
+            //         position: 'Assistant Director'
+            //     },
+            //     {
+            //         department: 'Executive',
+            //         position: 'Director'
+            //     },
+            //     {
+            //         department: 'Technical',
+            //         position: 'Electrical Engineer'
+            //     },
+            //     {
+            //         department: 'Technical',
+            //         position: 'Software Engineer'
+            //     },
+            // ],
+            jobPositions: {
+                'HR': ['HR Associate', 'HR Manager'],
+                'Sales': ['SalesMan', 'Sales Manager'],
+                'Marketing': ['Marketin Associate', 'Marketing Manager'],
+                'Executives': ['Assistant Director', 'Director'],
+                'Technical': ['Software Engineer', 'Electrical Engineer', "Lead Engineer"],
+            },
+            locations: {
+                'HR Associate': ['Islamabad, Pakistan', 'Okazaki, Japan', 'Ottawa, Canada', 'Berlin, Germany', 'London, United Kindom', 'DC, United States of America'],
+                'HR Manager': ['Islamabad, Pakistan', 'Okazaki, Japan', 'Ottawa, Canada', 'Berlin, Germany', 'London, United Kindom', 'DC, United States of America'],
+
+                'Sales Manager': ['Karachi, Pakistan', 'Tokyo, Japan', 'Berlin, Germany', 'DC, United States of America', 'Ottawa, Canada', 'Canberra, Australia'],
+                'SalesMan': ['Karachi, Pakistan', 'Tokyo, Japan', 'Berlin, Germany', 'DC, United States of America', 'Ottawa, Canada', 'Canberra, Australia'],
+
+                'Marketing Associate': ['Karachi, Pakistan', 'Tokyo, Japan', 'Berlin, Germany', 'DC, United States of America', 'Ottawa, Canada', 'Canberra, Australia'],
+                'Marketing Manager': ['Karachi, Pakistan', 'Tokyo, Japan', 'Berlin, Germany', 'DC, United States of America', 'Ottawa, Canada', 'Canberra, Australia'],
+
+                'Assistant Director': ['Islamabad, Pakistan'],
+                'Director': ['Islamabad, Pakistan'],
+                'Software Engineer': ['Islamabad, Pakistan', 'Lahore, Pakistan', 'Karachi, Pakistan', 'Beijing, China', 'Kuala Lumpur, Malaysia', 'Tokyo, Japan', 'Okazaki, Japan', 'Berlin, Germany', 'London, United Kindom', 'DC, United States of America', 'Ottawa, Canada', 'Brasilia, Brazil', 'Cape Town, South Africa', 'Canberra, Australia'],
+                'Electrical Engineer': ['Islamabad, Pakistan', 'Lahore, Pakistan', 'Karachi, Pakistan', 'Beijing, China', 'Kuala Lumpur, Malaysia', 'Tokyo, Japan', 'Okazaki, Japan', 'Berlin, Germany', 'London, United Kindom', 'DC, United States of America', 'Ottawa, Canada', 'Brasilia, Brazil', 'Cape Town, South Africa', 'Canberra, Australia'],
+                'Lead Engineer': ['Islamabad, Pakistan', 'Lahore, Pakistan', 'Karachi, Pakistan', 'Beijing, China', 'Kuala Lumpur, Malaysia', 'Tokyo, Japan', 'Okazaki, Japan', 'Berlin, Germany', 'London, United Kindom', 'DC, United States of America', 'Ottawa, Canada', 'Brasilia, Brazil', 'Cape Town, South Africa', 'Canberra, Australia'],
+            },
+            filteredJobPositions: [], // Initialize the filteredJobPositions array
+            filteredLocations: [], // Initialize the filteredLocations array
+
         };
     },
     methods: {
@@ -31,7 +98,7 @@ export default {
                 const employeeData = JSON.stringify(this.dataFields);
 
                 //API endpoint URL
-                const apiUrl = 'http://192.168.137.151:5000/newuser';
+                const apiUrl = 'http://192.168.1.102:5000/newuser';
 
                 // Make the API POST request using axios
                 const response = await axios.post(apiUrl, employeeData, {
@@ -67,15 +134,28 @@ export default {
                     title: 'Error',
                     text: 'An error occurred while adding the employee. Please try again later.',
                 });
-            } 
+            }
+        },
+        filterJobPositions() {
+            // Filter job Positions based on the selected department
+            const department = this.dataFields.department;
+            if (!department) return [];
+            this.filteredJobPositions = this.jobPositions[department] || []
+        },
+        filtereJobLocations() {
+            // Filter job Location based on the selected job Positions
+            const jobPosition = this.dataFields.jobPosition;
+            if (!jobPosition) return []; // Return an empty array if jobPosition is not selected
+
+            this.filteredLocations = this.locations[jobPosition] || [];
         },
         searchEmployeeByDepartment() {
             // this.searchResults = this.employees.filter((employee) =>
             //     employee.department.toLowerCase().includes(this.searchDepartment.toLowerCase())
             // );
         },
-    },
-};
+    }
+}
 </script>
 
 <template>
@@ -94,7 +174,7 @@ export default {
                     <label for="hire_date">Hire Date:</label>
                     <input type="date" id="hire_date" v-model="dataFields.hire_date" required>
                     <label for="department">Add Department:</label>
-                    <select id="department" v-model="dataFields.department" @change="searchEmployeeByDepartment" required>
+                    <select id="department" v-model="dataFields.department" @change="filterJobPositions" required>
                         <option value="">Select Department</option>
                         <option value="HR">HR</option>
                         <option value="Sales">Sales</option>
@@ -103,20 +183,11 @@ export default {
                         <option value="Technical">Technical</option>
                     </select>
                     <label for="location">Office Location</label>
-                    <select id="location" v-model="dataFields.location" @change="searchEmployeeByDepartment" required>
-                        <option value="">Select Loaction</option>
-                        <option value="Islamabad, Pakistan">Islamabad, Pakistan</option>
-                        <option value="Beijing, China">Beijing, China</option>
-                        <option value="Kuala Lumpur, Malaysia">Kuala Lumpur, Malaysia</option>
-                        <option value="Tokyo, Japan">Tokyo, Japan</option>
-                        <option value="Okazaki, Japan">Okazaki, Japan</option>
-                        <option value="Berlin, Germany">Berlin, Germany</option>
-                        <option value="London, United Kindom">London, United Kindom</option>
-                        <option value="DC, United States of America">DC, United States of America</option>
-                        <option value="Ottawa, Canada">Ottawa, Canada</option>
-                        <option value="Brasilia, Brazil">Brasilia, Brazil</option>
-                        <option value="Cape Town, South Africa">Cape Town, South Africa</option>
+                    <select id="location" v-model="dataFields.location" required>
+                        <option value="">Select Location</option>
+                        <option v-for="location in filteredLocations" :value="location" :key="location">{{ location }}</option>
                     </select>
+
                 </div>
                 <div class=" flex-1 flex flex-col">
                     <label for="last_name">Last Name:</label>
@@ -126,19 +197,9 @@ export default {
                     <label for="salary">Salary:</label>
                     <input type="number" id="salary" v-model="dataFields.salary" inputmode="numeric" required>
                     <label for="position">Job Position</label>
-                    <select id="position" v-model="dataFields.jobPosition" @change="searchEmployeeByDepartment" required>
+                    <select id="position" v-model="dataFields.jobPosition" @change="filtereJobLocations" required>
                         <option value="">Select Job Position</option>
-                        <option value="Electrical Engineer">Electrical Engineer</option>
-                        <option value="Software Engineer">Software Engineer</option>
-                        <option value="Lead Engineer">Lead Engineer</option>
-                        <option value="HR Associate">HR Associate</option>
-                        <option value="HR Manager">HR Manager</option>
-                        <option value="Marketing Associate">Marketing Associate</option>
-                        <option value="Marketing Manager">Marketing Manager</option>
-                        <option value="Assistant Director">Assistant Director</option>
-                        <option value="Director">Director</option>
-                        <option value="Sales Man">Sales Man</option>
-                        <option value="Sales Manager">Sales Mananger</option>
+                        <option v-for="position in filteredJobPositions" :value="position" :key="position">{{ position }}</option>
                     </select>
                 </div>
 
