@@ -11,7 +11,7 @@ app.use(Toast, {
   closeOnClick: false,
   closeButton: false,
   icon: false,
-  timeout: false,
+  timeout: 1000,
   transition: 'Vue-Toastification__fade',
 })
 app.mount('#app')

@@ -1,5 +1,10 @@
 <script>
 import PageWrapper from '@/components/PageWrapper.vue'
+import axios from 'axios';
+import {
+    successToast,
+    errorToast
+} from '@/toast'
 
 export default {
     data() {
@@ -12,23 +17,57 @@ export default {
                 phone_number: "",
                 hire_date: "",
                 salary: null,
-                addDepartment: "",
-                addLocation: "",
+                department: "",
+                location: "",
                 jobPosition: ""
             }
         };
     },
     methods: {
-        addEmployee() {
-            // Here you can implement the logic to submit the form and add the employee
-            // For simplicity, we will just log the employee data
-            console.log(
-                // employee_id: this.employee_id,
-                "dataFields of Add Employee: ", this.dataFields
-            );
+        async addEmployee() {
+            try {
+                // API endpoint URL
 
-            // You can send the data to your server or perform other actions here
-            // For example, you might make an API call to add the employee to your database
+                const employeeData = JSON.stringify(this.dataFields);
+
+                //API endpoint URL
+                const apiUrl = 'http://192.168.137.151:5000/newuser';
+
+                // Make the API POST request using axios
+                const response = await axios.post(apiUrl, employeeData, {
+                    headers: {
+                        'Content-Type': 'application/json', // Set the Content-Type header to JSON
+                    },
+                });
+                // Log the response or handle it as needed
+                console.log('Response from API:', response.data);
+                // Show a success toast when the API call is successful
+                successToast({
+                    title: 'Employee Added',
+                    text: 'The employee has been successfully added!',
+                });
+
+                // Clear form fields after successful submission
+                // this.dataFields = {
+                //     title: "Add Employee",
+                //     first_name: "",
+                //     last_name: "",
+                //     email: "",
+                //     phone_number: "",
+                //     hire_date: "",
+                //     salary: null,
+                //     department: "",
+                //     location: "",
+                //     jobPosition: ""
+                // };
+            } catch (error) {
+                // Handle any errors that occur during the API call
+                console.error('Error adding employee:', error);
+                errorToast({
+                    title: 'Error',
+                    text: 'An error occurred while adding the employee. Please try again later.',
+                });
+            } 
         },
         searchEmployeeByDepartment() {
             // this.searchResults = this.employees.filter((employee) =>
@@ -55,16 +94,16 @@ export default {
                     <label for="hire_date">Hire Date:</label>
                     <input type="date" id="hire_date" v-model="dataFields.hire_date" required>
                     <label for="department">Add Department:</label>
-                    <select id="department" v-model="dataFields.addDepartment" @change="searchEmployeeByDepartment" required>
+                    <select id="department" v-model="dataFields.department" @change="searchEmployeeByDepartment" required>
                         <option value="">Select Department</option>
                         <option value="HR">HR</option>
                         <option value="Sales">Sales</option>
-                        <option value="Finance">Finance</option>
-                        <option value="Exectives">Exectives</option>
-                        <option value="Technicle">Technicle</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Executives">Executives</option>
+                        <option value="Technical">Technical</option>
                     </select>
                     <label for="location">Office Location</label>
-                    <select id="location" v-model="dataFields.addLocation" @change="searchEmployeeByDepartment" required>
+                    <select id="location" v-model="dataFields.location" @change="searchEmployeeByDepartment" required>
                         <option value="">Select Loaction</option>
                         <option value="Islamabad, Pakistan">Islamabad, Pakistan</option>
                         <option value="Beijing, China">Beijing, China</option>
@@ -94,8 +133,8 @@ export default {
                         <option value="Lead Engineer">Lead Engineer</option>
                         <option value="HR Associate">HR Associate</option>
                         <option value="HR Manager">HR Manager</option>
-                        <option value="Accountant">Accountant</option>
-                        <option value="Finance Manager">Finance Manager</option>
+                        <option value="Marketing Associate">Marketing Associate</option>
+                        <option value="Marketing Manager">Marketing Manager</option>
                         <option value="Assistant Director">Assistant Director</option>
                         <option value="Director">Director</option>
                         <option value="Sales Man">Sales Man</option>
