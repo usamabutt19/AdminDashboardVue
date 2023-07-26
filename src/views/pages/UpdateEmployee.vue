@@ -29,30 +29,34 @@ export default {
         dummyNull() {
             this.foundEmployee = null
         },
-        searchEmployee() {
-            // Here you can implement the logic to search for the employee based on the provided `searchEmployeeEmail`
-            // For simplicity, let's assume you already have the employee data fetched and stored in a variable named `employeeData`
-            const employeeData = {
-                employee_id: 'EMP001',
-                first_name: 'John',
-                last_name: 'Doe',
-                email: 'john.doe@example.com',
-                phone_number: '123-456-7890',
-                hire_date: '2023-01-01',
-                salary: 50000,
-            };
 
-            // Simulate the search result
-            if (employeeData.employee_id === this.searchEmployeeEmail) {
-                this.foundEmployee = {
-                    ...employeeData
+        async searchEmployeeByEmail() {
+            try {
+                // API endpoint URL
+                const emailData = {
+                    field: "email",
+                    searchfield: this.searchEmail
                 };
-                this.searched = true;
-            } else {
-                this.foundEmployee = null;
-                this.searched = true;
+
+                const apiUrl = "http://192.168.137.151:5000/searchuser";
+
+                const response = await axios.post(apiUrl, emailData, {
+                    headers: {
+                        'Content-Type': 'application/json', // Set the Content-Type header to JSON
+                    },
+                });
+
+                console.log('Response from API:', response.data);
+                this.searchDepartmentResults = response.data
+                this.foundEmployee = true
+
+
+            } catch (error) {
+                // Handle any errors that occur during the API call
+                console.error('Error Searching employee:', error);
             }
         },
+
         updateEmployee() {
             // Here you can implement the logic to submit the form and update the employee
             // For simplicity, we will just log the updated employee data
@@ -75,7 +79,7 @@ export default {
             <form @submit.prevent="searchEmployee">
                 <label for="employee_email">Search Employee by Email:</label>
                 <input type="email" id="employee_email" v-model="searchEmployeeEmail" required>
-                <button v-on:click="dummyTrue" class="mt-4 p-2 w-36 flex justify-center gap-2 rounded-md transition-colors text-white bg-purple-500 shadow-lg hover:bg-purple-600" type="submit">
+                <button v-on:click="searchEmployeeByEmail" class="mt-4 p-2 w-36 flex justify-center gap-2 rounded-md transition-colors text-white bg-purple-500 shadow-lg hover:bg-purple-600" type="submit">
                     Search Employee
                 </button>
             </form>
@@ -100,8 +104,8 @@ export default {
                             <option value="HR">HR</option>
                             <option value="Sales">Sales</option>
                             <option value="Marketing">Marketing</option>
-                            <option value="Exectives">Executives</option>
-                            <option value="Technicle">Technicle</option>
+                            <option value="Executives">Executives</option>
+                            <option value="Technical">Technical</option>
                         </select>
                         <label for="location">Office Location</label>
                         <select id="location" v-model="dataFields.addLocation" @change="searchEmployeeByDepartment">
@@ -158,7 +162,6 @@ export default {
     </div>
 </PageWrapper>
 </template>
-
 
 <style scoped>
 /* Styling for the form wrapper */

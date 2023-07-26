@@ -21,51 +21,10 @@ export default {
                 location: "",
                 jobPosition: ""
             },
-            // jobPositions: [{
-            //         department: 'HR',
-            //         position: 'HR Associate'
-            //     },
-            //     {
-            //         department: 'HR',
-            //         position: 'HR Manager'
-            //     },
-            //     {
-            //         department: 'Sales',
-            //         position: 'SalesMan'
-            //     },
-            //     {
-            //         department: 'Sales',
-            //         position: 'Sales Manager'
-            //     },
-            //     {
-            //         department: 'Marketing',
-            //         position: 'Marketing Associate'
-            //     },
-            //     {
-            //         department: 'Marketing',
-            //         position: 'Marketing Manager'
-            //     },
-            //     {
-            //         department: 'Executives',
-            //         position: 'Assistant Director'
-            //     },
-            //     {
-            //         department: 'Executive',
-            //         position: 'Director'
-            //     },
-            //     {
-            //         department: 'Technical',
-            //         position: 'Electrical Engineer'
-            //     },
-            //     {
-            //         department: 'Technical',
-            //         position: 'Software Engineer'
-            //     },
-            // ],
             jobPositions: {
                 'HR': ['HR Associate', 'HR Manager'],
                 'Sales': ['SalesMan', 'Sales Manager'],
-                'Marketing': ['Marketin Associate', 'Marketing Manager'],
+                'Marketing': ['Marketing Associate', 'Marketing Manager'],
                 'Executives': ['Assistant Director', 'Director'],
                 'Technical': ['Software Engineer', 'Electrical Engineer', "Lead Engineer"],
             },
@@ -98,7 +57,8 @@ export default {
                 const employeeData = JSON.stringify(this.dataFields);
 
                 //API endpoint URL
-                const apiUrl = 'http://192.168.1.102:5000/newuser';
+                // const apiUrl = `${process.env.API_BASE_URL}/newuser`;
+                const apiUrl = "http://192.168.137.151:5000/newuser";
 
                 // Make the API POST request using axios
                 const response = await axios.post(apiUrl, employeeData, {
