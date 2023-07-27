@@ -125,43 +125,59 @@ export default {
         <h2 class="font-extrabold text-xl">{{ dataFields.title }}</h2>
         <form @submit.prevent="addEmployee">
 
-            <div class=" flex gap-16">
-                <div class=" flex-1 flex flex-col">
-                    <label for="first_name">First Name:</label>
-                    <input type="text" id="first_name" v-model="dataFields.first_name" required>
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" v-model="dataFields.email" required>
-                    <label for="hire_date">Hire Date:</label>
-                    <input type="date" id="hire_date" v-model="dataFields.hire_date" required>
-                    <label for="department">Add Department:</label>
-                    <select id="department" v-model="dataFields.department" @change="filterJobPositions" required>
-                        <option value="">Select Department</option>
-                        <option value="HR">HR</option>
-                        <option value="Sales">Sales</option>
-                        <option value="Marketing">Marketing</option>
-                        <option value="Executives">Executives</option>
-                        <option value="Technical">Technical</option>
-                    </select>
-                    <label for="location">Office Location</label>
-                    <select id="location" v-model="dataFields.location" required>
-                        <option value="">Select Location</option>
-                        <option v-for="location in filteredLocations" :value="location" :key="location">{{ location }}</option>
-                    </select>
-
-                </div>
-                <div class=" flex-1 flex flex-col">
-                    <label for="last_name">Last Name:</label>
-                    <input type="text" id="last_name" v-model="dataFields.last_name" required>
-                    <label for="phone_number">Phone Number:</label>
-                    <input type="tel" id="phone_number" v-model="dataFields.phone_number" required>
-                    <label for="salary">Salary:</label>
-                    <input type="number" id="salary" v-model="dataFields.salary" inputmode="numeric" required>
-                    <label for="position">Job Position</label>
-                    <select id="position" v-model="dataFields.jobPosition" @change="filtereJobLocations" required>
-                        <option value="">Select Job Position</option>
-                        <option v-for="position in filteredJobPositions" :value="position" :key="position">{{ position }}</option>
-                    </select>
-                </div>
+            <div class="flex  gap-8 flex-wrap">
+                    <div class=" lg:w-96 md:w-60">
+                        <label for="first_name">First Name:</label>
+                        <input type="text" id="first_name" v-model="dataFields.first_name" required>
+                    </div>
+                    <div class=" lg:w-96 md:w-60">
+                        <label for="last_name">Last Name:</label>
+                        <input type="text" id="last_name" v-model="dataFields.last_name" required>
+                    </div>
+                    <div class="lg:w-96 md:w-60">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" v-model="dataFields.email" required>
+                    </div>
+                    <div class="lg:w-96 md:w-60">
+                        <label for="phone_number">Phone Number:</label>
+                        <input type="tel" id="phone_number" v-model="dataFields.phone_number" required>
+                    </div>
+                    <div class="lg:w-96 md:w-60">
+                        <label for="salary">Salary:</label>
+                        <input type="number" id="salary" v-model="dataFields.salary" inputmode="numeric" required>
+                    </div>
+                    <div class="lg:w-96 md:w-60">
+                        <label for="hire_date">Hire Date:</label>
+                        <input type="date" id="hire_date" v-model="dataFields.hire_date" required>
+                    </div>
+                    <div class="lg:w-96 md:w-60 flex flex-col">
+                        <label for="department">Add Department:</label>
+                        <select id="department" v-model="dataFields.department" @change="filterJobPositions" required>
+                            <option value="">Select Department</option>
+                            <option value="HR">HR</option>
+                            <option value="Sales">Sales</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Executives">Executives</option>
+                            <option value="Technical">Technical</option>
+                        </select>
+                    </div>
+                    <div class="lg:w-96 md:w-60 flex flex-col">
+                        <label for="position">Job Position</label>
+                        <select id="position" v-model="dataFields.jobPosition" @change="filtereJobLocations" required>
+                            <option value="">Select Job Position</option>
+                            <option v-for="position in filteredJobPositions" :value="position" :key="position">{{ position }}</option>
+                        </select>
+                    </div>
+                    <div class="lg:w-96 md:w-60 flex flex-col">
+                        <label for="location">Office Location</label>
+                        <select id="location" v-model="dataFields.location" required>
+                            <option value="">Select Location</option>
+                            <option v-for="location in filteredLocations" :value="location" :key="location">{{ location }}</option>
+                        </select>
+                    </div>
+                    
+                    
+                   
 
             </div>
 
@@ -193,15 +209,14 @@ form {
 
 label {
     font-weight: bold;
-    margin-bottom: 0.5rem;
-    margin-top: 1rem;
 }
 
 input[type="text"],
 input[type="email"],
 input[type="tel"],
 input[type="number"],
-input[type="date"] {
+input[type="date"],
+select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
