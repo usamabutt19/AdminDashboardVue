@@ -4,7 +4,7 @@
 
 ```bash
 # 1. Clone the repository:
-git clone https://github.com/kamona-ui/kui-dashboard-vue.git
+git clone https://github.com/usamabutt19/AdminDashboardVue.git
 
 cd kui-dashboard-vue
 
