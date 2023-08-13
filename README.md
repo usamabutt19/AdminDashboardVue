@@ -1,14 +1,4 @@
-## K UI Admin Dashboard Template (Vue 3)
 
-> ⚠️ This template is not finished yet and still in design phase. We are building it in public.
-
-### [Live preview](https://kamona-ui.github.io/kui-dashboard-vue/)
-
-##### [Vue JSX version](https://github.com/kamona-ui/kui-dashboard-vue-jsx/)
-
-##### [HTML version](https://github.com/kamona-ui/kui-dashboard-html/)
-
-##### [laravel package](https://github.com/Kamona-WD/kui-laravel-breeze/)
 
 ##### To get started:
 
